@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import UserModel from "../models/user.model.js";
+import UserModel,{information} from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
-
+import { AuthRequest } from "../middleware/auth.middleware.js";
 // POST /auth/register
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -73,3 +73,34 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: "Server error", error });
     }
 };
+
+export const reservation = async (req:Request,res:Response)=>{
+    try{
+        const {movieName,showTime,selectedSeats} = req.body
+    if(!movieName || !showTime || !selectedSeats){
+        res.status(400).json({
+            message : "Movie Information is incorrect"
+        })
+        return;
+    }
+    const seats = await information.find({
+        seats : {$in : selectedSeats} 
+    })
+    if(!seats.length){
+        res.status(400).json({
+            message : "The seats is not available"
+        })
+        return;
+    }
+    const customer = await information.create({
+        movieName,
+        showTime,
+        selectedSeats
+    })
+    res.status(201).json(customer)
+    }catch(error){
+        res.status(500).json({
+            message : "Something Went Wrong !"
+        })
+    }
+}

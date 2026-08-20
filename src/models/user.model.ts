@@ -19,3 +19,41 @@ const userSchema = new Schema<User>({
 });
 
 export default mongoose.model<User>("User", userSchema);
+
+const seats = new Schema({
+    seatId : {
+        type : String,
+        required : true
+    },
+    price : {
+        type : Number,
+        required : true
+    }
+})
+
+
+const Information = new Schema({
+    customer : {
+        type : String
+    },
+    movieName : {
+        type : String,
+        required : true
+    },
+    showTime :{
+        type : String,
+        required : true
+    },
+    selectedSeats :{
+        type : [seats],
+        required : true,
+        default : []
+    },
+    bookingStatus : {
+        type : String,
+        enum : ["Pending" , "Confirmed" , "Canceled"],
+        default : "Pending"
+    },
+})
+
+export const information = mongoose.model("information",Information)
