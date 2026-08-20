@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import UserModel,{information} from "../models/user.model.js";
+import UserModel,{Showtime} from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
 import { AuthRequest } from "../middleware/auth.middleware.js";
 // POST /auth/register
@@ -74,30 +74,76 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export const reservation = async (req:Request,res:Response)=>{
+
+export const getAll = async (req:Request,res:Response)=>{
     try{
-        const {movieName,showTime,selectedSeats} = req.body
-    if(!movieName || !showTime || !selectedSeats){
+        const all = await Showtime.find();
+        res.status(200).json(all)
+    }catch(error){
+        res.status(500).json({
+            message : "Something Went Wrong !"
+        })
+    }
+} 
+
+export const reservation = async(req:Request,res:Response)=>{
+    try{
+        const {movieId, seatsRequired,selectedSeats} = req.body
+    if(!movieId || !seatsRequired || !selectedSeats){
         res.status(400).json({
-            message : "Movie Information is incorrect"
+            message : "Some Information Misssing"
         })
         return;
     }
-    const seats = await information.find({
-        seats : {$in : selectedSeats} 
-    })
-    if(!seats.length){
+    const movie = await Showtime.findOne({movieId})
+    if(!movie){
         res.status(400).json({
-            message : "The seats is not available"
+            message : "Movie is not Found"
         })
         return;
     }
-    const customer = await information.create({
-        movieName,
-        showTime,
-        selectedSeats
+    if(seatsRequired > movie.totalcapacity){
+        res.status(400).json({
+            message : "No seats Available at the Moment "
+        })
+        return;
+    }
+
+    const seats = await Showtime.find({
+        selectedSeats : {$in : selectedSeats} 
     })
-    res.status(201).json(customer)
+    if(seats.length > 0){
+        res.status(400).json({
+            message : "The Seats are already reserved"
+        })
+        return;
+    }
+    if(selectedSeats.length !== seatsRequired){
+        res.status(400).json({
+            message : "The Seats reserved is more than the required !!"
+        })
+        return;
+    }
+    const totalPrice = movie.ticketprice * seatsRequired 
+    const update = await Showtime.findOneAndUpdate(
+        {movieId},
+        {
+            $inc : {
+                totalcapacity: - seatsRequired
+            },
+            $addToSet:{
+                selectedSeats:{
+                    $each: selectedSeats
+                }
+            }
+        },
+        {new : true}
+    )
+    res.status(200).json({
+        message : "Reservation done successfully :) The Total Price is ",
+        totalPrice,
+        update,
+    })
     }catch(error){
         res.status(500).json({
             message : "Something Went Wrong !"

@@ -20,40 +20,28 @@ const userSchema = new Schema<User>({
 
 export default mongoose.model<User>("User", userSchema);
 
-const seats = new Schema({
-    seatId : {
-        type : String,
-        required : true
-    },
-    price : {
-        type : Number,
-        required : true
-    }
-})
+interface IShowtime extends Document {
+    movieId: Schema.Types.ObjectId; // Reference to the Movie model
+    movieName : string;
+    hallnumber: number;
+    date: Date;
+    startTime: Date;
+    endTime: Date;
+    ticketprice: number;
+    totalcapacity: number;
+}
 
+const ShowtimeSchema: Schema = new Schema({
+    movieId: { type: String, required: true },
+    movieName : { type: String, required: true},
+    hallnumber: { type: String, required: true },
+    date: { type: String, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    ticketprice: { type: Number, required: true },
+    totalcapacity: { type: Number, required: true },
+    seatsRequired : { type: Number, required : true },
+    selectedSeats : { type: [String], required : true}
+});
 
-const Information = new Schema({
-    customer : {
-        type : String
-    },
-    movieName : {
-        type : String,
-        required : true
-    },
-    showTime :{
-        type : String,
-        required : true
-    },
-    selectedSeats :{
-        type : [seats],
-        required : true,
-        default : []
-    },
-    bookingStatus : {
-        type : String,
-        enum : ["Pending" , "Confirmed" , "Canceled"],
-        default : "Pending"
-    },
-})
-
-export const information = mongoose.model("information",Information)
+export const Showtime = mongoose.model<IShowtime>("Showtime", ShowtimeSchema);
