@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "A platform for browsing movies, booking tickets, and managing showtimes - built with Node.js, TypeScript, Express, and MongoDB.",
   "main": "index.js",
-  "scripts": {
-  "dev": "tsx src/server.ts",
+
+"scripts": {
+  "dev": "tsx watch src/server.ts",
+  "start": "tsx src/server.ts",
   "test": "echo \"Error: no test specified\" && exit 1"
 },
+
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/monicaemad560-dot/movie-ticket-booking-system.git"
@@ -25,6 +29,7 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.5.0",
     "mongoose": "^9.9.3",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1"
