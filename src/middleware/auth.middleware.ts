@@ -26,7 +26,7 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     }
 };
 
-// Restricts access to specific roles (use after `protect`) authz
+// Restricts access to specific roles ( `protect` then authz)
 export const authorize = (...allowedRoles: string[]) => {
     return (req: AuthRequest, res: Response, next: NextFunction): void => {
         if (!req.user || !allowedRoles.includes(req.user.role)) {

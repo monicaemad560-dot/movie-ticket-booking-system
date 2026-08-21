@@ -10,6 +10,7 @@ import{
 } from "../controllers/showtime.controller.js"; 
 
 import { validateShowtime } from "../middleware/showtime.middleware.js";
+import { authorize, protect } from "../middleware/auth.middleware.js";
 
 /**
  * @swagger
@@ -71,9 +72,8 @@ import { validateShowtime } from "../middleware/showtime.middleware.js";
  * @swagger
  * /showtimes:
  *   post:
- *     -tags: showtimes
+ *     tags: [showtimes]
  *     summary: Create a new showtime
- 
  *     requestBody:
  *       required: true
  *       content:
@@ -91,14 +91,13 @@ import { validateShowtime } from "../middleware/showtime.middleware.js";
  *         description: error occurred while creating the showtime
 
  */
-router.post("/creat",validateShowtime , createShowtime);
+router.post("/creat",protect,authorize('Cinema Admin'),validateShowtime , createShowtime);
 
 /**
  * @swagger
  * /showtimes/{id}:
  *   get:
- *     -tags:
- *       - showtimes
+ *     tags: [showtimes]
  *     summary: Get a showtime by ID
  *     parameters:
  *       - in: path
@@ -121,14 +120,13 @@ router.post("/creat",validateShowtime , createShowtime);
  */
 
 
-router.get("/:id", getShowtimeById);
+router.get("/:id",protect, getShowtimeById);
 
 /**
  * @swagger
  * /showtimes/{id}:
  *   put:
- *     -tags:
- *       - showtimes
+ *     tags: [showtimes]
  *     summary: Update a showtime
  *     parameters:
  *       - in: path
@@ -158,14 +156,13 @@ router.get("/:id", getShowtimeById);
  *         description: Server error
  */
 
-router.put("/:id", updateShowtime, validateShowtime);
+router.put("/:id",protect,authorize('Cinema Admin'), updateShowtime, validateShowtime);
 
 /**
  * @swagger
  * /showtimes/{id}:
  *   delete:
- *     -tags:
- *       - showtimes
+ *     tags: [showtimes]
  *     summary: Delete a showtime
  *     parameters:
  *       - in: path
@@ -190,8 +187,7 @@ router.delete("/:id", deleteShowtime);
  * @swagger
  * /showtimes:
  *   get:
- *     -tags:
- *       - showtimes
+ *     tags: [showtimes]
  *     summary: Get all showtimes
  *     responses:
  *       200:
