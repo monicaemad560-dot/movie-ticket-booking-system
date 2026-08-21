@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import MovieModel from "../models/MovieModel.js";
 
 // POST /movies
-export const createMovie = async (req: Request, res: Response): Promise<void> => {
+export const addmovieInfo = async (req: Request, res: Response): Promise<void> => {
     try {
         const { title, description, genre, duration, releaseDate, rating } = req.body;
 
@@ -30,7 +30,7 @@ export const createMovie = async (req: Request, res: Response): Promise<void> =>
 };
 
 // GET /movies
-export const getMovies = async (req: Request, res: Response): Promise<void> => {
+export const getmoviesInfo = async (req: Request, res: Response): Promise<void> => {
     try {
         const { genre, title } = req.query;
 
@@ -58,7 +58,7 @@ export const getMovies = async (req: Request, res: Response): Promise<void> => {
 };
 
 // GET /movies/:id
-export const getMovieById = async (req: Request, res: Response): Promise<void> => {
+export const getmovieinfoById = async (req: Request, res: Response): Promise<void> => {
     try {
         const movie = await MovieModel.findById(req.params.id);
 
@@ -81,7 +81,7 @@ export const getMovieById = async (req: Request, res: Response): Promise<void> =
 };
 
 // PUT /movies/:id
-export const updateMovie = async (req: Request, res: Response): Promise<void> => {
+export const updatemovieInfo = async (req: Request, res: Response): Promise<void> => {
     try {
         const movie = await MovieModel.findByIdAndUpdate(
             req.params.id,
@@ -109,7 +109,7 @@ export const updateMovie = async (req: Request, res: Response): Promise<void> =>
 };
 
 // DELETE /movies/:id
-export const deleteMovie = async (req: Request, res: Response): Promise<void> => {
+export const deletemovieinfo = async (req: Request, res: Response): Promise<void> => {
     try {
         const movie = await MovieModel.findByIdAndDelete(req.params.id);
 

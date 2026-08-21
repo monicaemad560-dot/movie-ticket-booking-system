@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { reservation,getAll } from "../controllers/booking.controller.js";
-import { protect } from "../middleware/auth.middleware.js";
+import { reservation,reciept,cancel } from "../controllers/booking.controller.js";
+import { authorize, protect } from "../middleware/auth.middleware.js";
 const bookingRouter = Router();
 
 /**
@@ -66,7 +66,7 @@ const bookingRouter = Router();
  *       500:
  *         description: Some server error!
  */
-bookingRouter.get("/",getAll)
+bookingRouter.get("/",reciept)
 
 /**
  * @swagger
@@ -93,6 +93,33 @@ bookingRouter.get("/",getAll)
  *         description: Some server error!
  */
 
-bookingRouter.post("/",protect,reservation)
+bookingRouter.post("/",reservation)
 
+/**
+ * @swagger
+ * /api/bookings/{id}:
+ *   :
+ *     tags: [Reservation]
+ *     summary: Cancell the reservation
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: String
+ *         required: true
+ *         description: Reciept Id
+ *     responses:
+ *       200:
+ *         description: The Cancellation done Successfully
+ *         content: 
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Booking'
+ *       404:
+ *         description: The Id is Wrong
+ *       500:
+ *         description: Some server error!
+ */
+
+bookingRouter.delete("/:id",protect,authorize('Cinema Admin'),cancel)
 export default bookingRouter ;

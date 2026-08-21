@@ -8,6 +8,8 @@ const router = Router();
  * @swagger
  * /auth/register:
  *   post:
+ *     tags:
+ *       - Auth
  *     summary: Register a new user
  *     requestBody:
  *       required: true
@@ -38,6 +40,8 @@ router.post("/register", register);
  * @swagger
  * /auth/login:
  *   post:
+ *     tags:
+ *       - Auth
  *     summary: Log in an existing user
  *     requestBody:
  *       required: true

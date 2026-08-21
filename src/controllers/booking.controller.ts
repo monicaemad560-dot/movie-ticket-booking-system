@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { Booking } from "../models/booking.model.js";
 import { Showtime } from "../models/showtime.model.js";
+import bookingRouter from "../routes/booking.router.js";
 
-export const getAll = async (req:Request,res:Response)=>{
+export const reciept = async (req:Request,res:Response)=>{
     try{
         const all = await Booking.find();
         res.status(200).json(all)
@@ -68,6 +69,26 @@ export const reservation = async(req:Request,res:Response)=>{
         totalPrice,
         update,
     })
+    }catch(error){
+        res.status(500).json({
+            message : "Something Went Wrong !",
+            error,
+        })
+    }
+}
+
+
+export const cancel = async (req:Request,res:Response)=>{
+    try{
+        const deleted = await Booking.findByIdAndDelete(req.params.id)
+        if(!deleted){
+            res.status(400).json({
+                message : "Id is Wrong !"
+            })
+        }
+        res.status(200).json({
+            message : "Booking cancelled successfully !"
+        })
     }catch(error){
         res.status(500).json({
             message : "Something Went Wrong !",

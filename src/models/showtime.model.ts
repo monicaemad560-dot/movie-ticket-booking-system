@@ -21,7 +21,7 @@ const ShowtimeSchema: Schema = new Schema({
     endTime: { type: String, required: true },
     ticketprice: { type: Number, required: true },
     totalcapacity: { type: Number, required: true },
-    selectedSeats : { type: [String], default : [] ,required : true}
+    selectedSeats : { type: [String], default : [] ,required : true},
 });
 
 export const Showtime = mongoose.model<IShowtime>("Showtime", ShowtimeSchema);

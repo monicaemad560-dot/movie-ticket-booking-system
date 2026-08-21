@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
-    createMovie,
-    getMovies,
-    getMovieById,
-    updateMovie,
-    deleteMovie
+    addmovieInfo,
+    getmoviesInfo,
+    getmovieinfoById,
+    updatemovieInfo,
+    deletemovieinfo
 } from "../controllers/Movie.controller.js";
 import { authorize, protect } from "../middleware/auth.middleware.js";
 const movieRouter = Router();
@@ -56,7 +56,7 @@ const movieRouter = Router();
  *       500:
  *         description: Server error
  */
-movieRouter.post("/", createMovie);
+movieRouter.post("/",protect,authorize('Cinema Admin'), addmovieInfo);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ movieRouter.post("/", createMovie);
  *       500:
  *         description: Server error
  */
-movieRouter.get("/", getMovies);
+movieRouter.get("/",protect, getmoviesInfo);
 
 /**
  * @swagger
@@ -104,7 +104,7 @@ movieRouter.get("/", getMovies);
  *       500:
  *         description: Server error
  */
-movieRouter.get("/:id", getMovieById);
+movieRouter.get("/:id",protect, getmovieinfoById);
 
 /**
  * @swagger
@@ -149,7 +149,7 @@ movieRouter.get("/:id", getMovieById);
  *       500:
  *         description: Server error
  */
-movieRouter.put("/:id", protect , authorize('') , updateMovie);
+movieRouter.put("/:id", protect , authorize('Cinema Admin') , updatemovieInfo);
 
 /**
  * @swagger
@@ -172,6 +172,6 @@ movieRouter.put("/:id", protect , authorize('') , updateMovie);
  *       500:
  *         description: Server error
  */
-movieRouter.delete("/:id", protect , authorize('') , deleteMovie);
+movieRouter.delete("/:id", protect , authorize('Cinema Admin') , deletemovieinfo);
 
 export default movieRouter;

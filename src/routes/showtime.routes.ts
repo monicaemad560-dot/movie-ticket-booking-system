@@ -10,6 +10,7 @@ import{
 } from "../controllers/showtime.controller.js"; 
 
 import { validateShowtime } from "../middleware/showtime.middleware.js";
+import { authorize, protect } from "../middleware/auth.middleware.js";
 
 /**
  * @swagger
@@ -90,7 +91,7 @@ import { validateShowtime } from "../middleware/showtime.middleware.js";
  *         description: error occurred while creating the showtime
 
  */
-router.post("/creat",validateShowtime , createShowtime);
+router.post("/creat",protect,authorize('Cinema Admin'),validateShowtime , createShowtime);
 
 /**
  * @swagger
@@ -119,7 +120,7 @@ router.post("/creat",validateShowtime , createShowtime);
  */
 
 
-router.get("/:id", getShowtimeById);
+router.get("/:id",protect, getShowtimeById);
 
 /**
  * @swagger
@@ -155,7 +156,7 @@ router.get("/:id", getShowtimeById);
  *         description: Server error
  */
 
-router.put("/:id", updateShowtime, validateShowtime);
+router.put("/:id",protect,authorize('Cinema Admin'), updateShowtime, validateShowtime);
 
 /**
  * @swagger
