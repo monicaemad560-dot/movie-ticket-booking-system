@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { reservation,getAll } from "../controllers/booking.controller.js";
+import { protect } from "../middleware/auth.middleware.js";
 const bookingRouter = Router();
 
 /**
@@ -51,7 +52,7 @@ const bookingRouter = Router();
  * @swagger
  * /api/bookings:
  *   get:
- *     tags: [Bookings]
+ *     tags: [Reservation]
  *     summary: Get all bookings
  *     responses:
  *       200:
@@ -71,7 +72,7 @@ bookingRouter.get("/",getAll)
  * @swagger
  * /api/bookings:
  *   post:
- *     tags: [Bookings]
+ *     tags: [Reservation]
  *     summary: Create a new reservation (seat booking logic)
  *     requestBody:
  *       required: true
@@ -92,6 +93,6 @@ bookingRouter.get("/",getAll)
  *         description: Some server error!
  */
 
-bookingRouter.post("/",reservation)
+bookingRouter.post("/",protect,reservation)
 
 export default bookingRouter ;

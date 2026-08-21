@@ -17,7 +17,8 @@ const options: swaggerJSDoc.Options = {
             description: "API for browsing movies, booking tickets, and managing showtimes."
         }
     },
-    apis: [movieRoutesPath]
+    apis: ['./src/routes/*.ts',
+    './src/controllers/*.ts',]
 };
 
 const swaggerSpec = swaggerJSDoc(options);

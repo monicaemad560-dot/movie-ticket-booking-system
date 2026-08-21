@@ -6,7 +6,7 @@ import {
     updateMovie,
     deleteMovie
 } from "../controllers/Movie.controller.js";
-
+import { authorize, protect } from "../middleware/auth.middleware.js";
 const movieRouter = Router();
 
 /**
@@ -149,7 +149,7 @@ movieRouter.get("/:id", getMovieById);
  *       500:
  *         description: Server error
  */
-movieRouter.put("/:id", updateMovie);
+movieRouter.put("/:id", protect , authorize('') , updateMovie);
 
 /**
  * @swagger
@@ -172,6 +172,6 @@ movieRouter.put("/:id", updateMovie);
  *       500:
  *         description: Server error
  */
-movieRouter.delete("/:id", deleteMovie);
+movieRouter.delete("/:id", protect , authorize('') , deleteMovie);
 
 export default movieRouter;
