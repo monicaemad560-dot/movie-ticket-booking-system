@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { register, login } from "../controllers/auth.controller.js";
-
+import { reservation,getAll } from "../controllers/booking.controller.js";
 const router = Router();
+
 
 /**
  * @swagger
@@ -30,6 +31,7 @@ const router = Router();
  *       400:
  *         description: Email already registered
  */
+
 router.post("/register", register);
 
 /**
@@ -55,5 +57,4 @@ router.post("/register", register);
  *         description: Invalid email or password
  */
 router.post("/login", login);
-
 export default router;
