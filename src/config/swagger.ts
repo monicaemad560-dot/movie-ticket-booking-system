@@ -1,4 +1,12 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import path from "path";
+
+const movieRoutesPath = path.resolve(
+    process.cwd(),
+    "src",
+    "routes",
+    "Movie.router.ts"
+);
 
 const options: swaggerJSDoc.Options = {
     definition: {
@@ -9,7 +17,7 @@ const options: swaggerJSDoc.Options = {
             description: "API for browsing movies, booking tickets, and managing showtimes."
         }
     },
-    apis: ["./src/routes/*.ts"]
+    apis: [movieRoutesPath]
 };
 
 const swaggerSpec = swaggerJSDoc(options);
