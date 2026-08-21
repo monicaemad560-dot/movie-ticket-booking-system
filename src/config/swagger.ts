@@ -15,7 +15,17 @@ const options: swaggerJSDoc.Options = {
             title: "Movie Ticket Booking System API",
             version: "1.0.0",
             description: "API for browsing movies, booking tickets, and managing showtimes."
+        },
+
+        components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT"
+            }
         }
+    }
     },
     apis: ['./src/routes/*.ts',
     './src/controllers/*.ts',]

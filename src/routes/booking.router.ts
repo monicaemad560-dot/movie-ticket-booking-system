@@ -75,6 +75,8 @@ bookingRouter.get("/",reciept)
  *   post:
  *     tags: [Reservation]
  *     summary: Create a new reservation (seat booking logic)
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -94,7 +96,7 @@ bookingRouter.get("/",reciept)
  *         description: Some server error!
  */
 
-bookingRouter.post("/",reservation)
+bookingRouter.post("/", protect, reservation)
 
 /**
  * @swagger
@@ -104,6 +106,8 @@ bookingRouter.post("/",reservation)
  *   patch:
  *     tags: [Reservation]
  *     summary: Cancel the reservation
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -121,6 +125,33 @@ bookingRouter.post("/",reservation)
  *         description: Some server error
  */
 bookingRouter.patch("/:id/cancel", cancel);
+
+/**
+ * @swagger
+ * /api/bookings/{id}:
+ *   delete:
+ *     tags: [Reservation]
+ *     summary: Delete a booking
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Booking deleted successfully
+ *       401:
+ *         description: No token provided or invalid token
+ *       403:
+ *         description: User is not authorized
+ *       404:
+ *         description: Booking not found
+ *       500:
+ *         description: Some server error
+ */
 
 bookingRouter.delete("/:id", protect, authorize("Cinema Admin"), cancel);
 
