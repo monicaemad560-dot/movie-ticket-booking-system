@@ -9,7 +9,7 @@ interface IShowtime extends Document {
     endTime: String;
     ticketprice: number;
     totalcapacity: number;
-    selectedSeats: [string];
+    selectedSeats: string[];
 }
 
 const ShowtimeSchema: Schema = new Schema({

@@ -96,3 +96,57 @@ export const cancel = async (req:Request,res:Response)=>{
         })
     }
 }
+export const cancelBooking = async (req: Request, res: Response) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+
+        if (!booking) {
+            return res.status(404).json({
+                message: "Booking not found"
+            });
+        }
+
+        const showtime = await Showtime.findById(booking.showtimeId);
+
+        if (!showtime) {
+            return res.status(404).json({
+                message: "Showtime not found"
+            });
+        }
+
+        const movieStart = new Date(
+            `${showtime.date} ${showtime.startTime}`
+        );
+
+       if (new Date() >= movieStart) {
+    return res.status(400).json({
+        message: "Booking cannot be canceled after the movie starts"
+    });
+}
+
+// Release the reserved seats
+showtime.selectedSeats = showtime.selectedSeats.filter(
+    (seat) => !booking.selectedSeats.includes(seat)
+);
+
+// Return the seats to the available capacity
+showtime.totalcapacity += booking.seatsRequired;
+
+await showtime.save();
+
+// Cancel the booking
+booking.status = "canceled";
+
+await booking.save();
+
+        return res.status(200).json({
+            message: "Booking canceled successfully",
+            booking
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to cancel booking"
+        });
+    }
+};

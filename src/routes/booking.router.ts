@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { reservation,reciept,cancel } from "../controllers/booking.controller.js";
 import { authorize, protect } from "../middleware/auth.middleware.js";
+import { cancelBooking } from "../controllers/booking.controller.js";
 const bookingRouter = Router();
 
 /**
@@ -97,29 +98,30 @@ bookingRouter.post("/",reservation)
 
 /**
  * @swagger
- * /api/bookings/{id}:
- *   :
+ /**
+ * @swagger
+ * /api/bookings/{id}/cancel:
+ *   patch:
  *     tags: [Reservation]
- *     summary: Cancell the reservation
+ *     summary: Cancel the reservation
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: String
  *         required: true
- *         description: Reciept Id
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: The Cancellation done Successfully
- *         content: 
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Booking'
+ *         description: Booking canceled successfully
+ *       400:
+ *         description: Booking cannot be canceled after the movie starts
  *       404:
- *         description: The Id is Wrong
+ *         description: Booking or Showtime not found
  *       500:
- *         description: Some server error!
+ *         description: Some server error
  */
+bookingRouter.patch("/:id/cancel", protect, cancel);
 
-bookingRouter.delete("/:id",protect,authorize('Cinema Admin'),cancel)
-export default bookingRouter ;
+bookingRouter.delete("/:id", protect, authorize("Cinema Admin"), cancel);
+
+export default bookingRouter;
