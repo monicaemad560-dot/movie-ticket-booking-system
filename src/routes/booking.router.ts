@@ -120,7 +120,7 @@ bookingRouter.post("/",reservation)
  *       500:
  *         description: Some server error
  */
-bookingRouter.patch("/:id/cancel", protect, cancel);
+bookingRouter.patch("/:id/cancel", cancel);
 
 bookingRouter.delete("/:id", protect, authorize("Cinema Admin"), cancel);
 

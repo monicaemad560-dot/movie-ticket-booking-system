@@ -17,12 +17,12 @@ export const reciept = async (req:Request,res:Response)=>{
 export const reservation = async(req:Request,res:Response)=>{
     try{
         const {userId,showtimeId, seatsRequired,selectedSeats} = req.body
-    if(!userId || !showtimeId || !seatsRequired || !selectedSeats){
-        res.status(400).json({
-            message : "Some Information Misssing"
-        })
-        return;
-    }
+        if(!userId || !showtimeId || !seatsRequired || !selectedSeats){
+            res.status(400).json({
+                message : "Some Information Misssing"
+            })
+            return;
+        }
     const movie = await Showtime.findOne({_id : showtimeId})
     if(!movie){
         res.status(400).json({
@@ -30,6 +30,18 @@ export const reservation = async(req:Request,res:Response)=>{
         })
         return;
     }
+
+    const dateToNumber = (date: Date | string): number => {
+        return new Date(date).getTime();
+    };
+    const showtimeTime = dateToNumber(movie.startTime.toString());
+    const now = new Date();
+    if (showtimeTime < now.getTime()) {
+        return res.status(400).json({
+            message: "Bookings can only be made for upcoming showtimes"
+        });
+    }
+
     if(seatsRequired > movie.totalcapacity){
         res.status(400).json({
             message : "No seats Available at the Moment "
