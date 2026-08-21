@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { reservation,getAll } from "../controllers/booking.controller.js";
-const router = Router();
+const bookingRouter = Router();
 
 /**
  * @swagger
@@ -9,58 +9,37 @@ const router = Router();
  *     Booking:
  *       type: object
  *       required:
- *         - movieId
- *         - movieName
- *         - hallnumber
- *         - date
- *         - startTime
- *         - endTime
- *         - ticketprice
- *         - totalcapacity
+ *         - userId
+ *         - showtimeId
  *         - seatsRequired
  *         - selectedSeats
  *       properties:
- *         movieId:
+ *         userId:
  *           type: string
- *           description: Id of the movie
- *         movieName:
+ *           description: Id of the user making the booking
+ *         showtimeId:
  *           type: string
- *           description: The Name of the Movie
- *         hallnumber:
- *           type: string
- *           description: The number of the Hall Where The movie will be Presented
- *         date:
- *           type: string
- *           description: The Date of the Show 
- *         startTime:
- *           type: string
- *           description: The Time the show begins
- *         endTime:
- *           type: string
- *           description: The time the show ends
- *         ticketprice:
- *           type: number
- *           description: The price of the Ticket
- *         totalcapacity:
- *           type: number
- *           description: The number of the available seats in the Hall
+ *           description: Id of the showtime being booked
  *         seatsRequired:
  *           type: number
- *           description: The number of Seats The user need
+ *           description: Number of seats requested
  *         selectedSeats:
- *           type: [string]
- *           description: The Positions of the seats like {A1,A2,B1,.....}
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The seat positions selected, e.g. [A1, A2, B1]
+ *         totalPrice:
+ *           type: number
+ *           description: Total price calculated for the booking (auto-calculated, not sent by user)
+ *         status:
+ *           type: string
+ *           enum: [preparing, confirmed, canceled]
+ *           description: Current status of the booking
  *       example:
- *         movieId: E900
- *         movieName: Spider-Man
- *         hallnumber: 1MAX
- *         date: 03-04-2027
- *         startTime: 10 PM
- *         endTime: 12 AM
- *         ticketprice: 170
- *         totalcapacity: 100
- *         seatsRequired: 5
- *         selectedSeats: [A1,A2,B1,B2,B3]
+ *         userId: 64f1a2b3c4d5e6f7a8b9c0d1
+ *         showtimeId: 64f1a2b3c4d5e6f7a8b9c0d2
+ *         seatsRequired: 3
+ *         selectedSeats: [A1, A2, B1]
  */
 /**
  * @swagger
@@ -70,28 +49,30 @@ const router = Router();
  */
 /**
  * @swagger
- * /egybest:
+ * /api/bookings:
  *   get:
- *     tags: Bookings
- *     summary: it Present the hole movies for the user to make it easier for him to choose 
+ *     tags: [Bookings]
+ *     summary: Get all bookings
  *     responses:
  *       200:
- *         description: The Data Pressented Successfully
+ *         description: The Data Presented Successfully
  *         content: 
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Booking'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Booking'
  *       500:
  *         description: Some server error!
  */
-router.get("/",getAll)
+bookingRouter.get("/",getAll)
 
 /**
  * @swagger
- * /egybest:
- *   patch:
- *     tags: Bookings
- *     summary: it's the hole logic of the program of the reservation logic
+ * /api/bookings:
+ *   post:
+ *     tags: [Bookings]
+ *     summary: Create a new reservation (seat booking logic)
  *     requestBody:
  *       required: true
  *       content:
@@ -106,10 +87,11 @@ router.get("/",getAll)
  *             schema:
  *               $ref: '#/components/schemas/Booking'
  *       400:
- *         description: it defines more than one thing, the movie is not found, no seats available,some information is missing, the seats are reserved already
+ *         description: Movie not found, no seats available, missing info, or seats already reserved
  *       500:
  *         description: Some server error!
  */
-router.patch("/",reservation)
 
-export default router ;
+bookingRouter.post("/",reservation)
+
+export default bookingRouter ;

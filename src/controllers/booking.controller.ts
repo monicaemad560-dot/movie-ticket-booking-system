@@ -4,7 +4,7 @@ import { Showtime } from "../models/showtime.model.js";
 
 export const getAll = async (req:Request,res:Response)=>{
     try{
-        const all = await Showtime.find();
+        const all = await Booking.find();
         res.status(200).json(all)
     }catch(error){
         res.status(500).json({
@@ -38,16 +38,6 @@ export const reservation = async(req:Request,res:Response)=>{
     if(selectedSeats.length !== seatsRequired){
         res.status(400).json({
             message : "The Seats reserved is more than the required !!"
-        })
-        return;
-    }
-    const seats = await Showtime.find({
-        _id : showtimeId,
-        selectedSeats : {$in : selectedSeats} 
-    })
-    if(seats.length > 0){
-        res.status(400).json({
-            message : "The Seats are already reserved"
         })
         return;
     }
