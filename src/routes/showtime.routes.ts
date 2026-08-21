@@ -71,7 +71,7 @@ import { validateShowtime } from "../middleware/showtime.middleware.js";
  * @swagger
  * /showtimes:
  *   post:
- *     tags: showtimes
+ *     -tags: showtimes
  *     summary: Create a new showtime
  
  *     requestBody:
@@ -97,7 +97,7 @@ router.post("/creat",validateShowtime , createShowtime);
  * @swagger
  * /showtimes/{id}:
  *   get:
- *     tags:
+ *     -tags:
  *       - showtimes
  *     summary: Get a showtime by ID
  *     parameters:
@@ -127,7 +127,7 @@ router.get("/:id", getShowtimeById);
  * @swagger
  * /showtimes/{id}:
  *   put:
- *     tags:
+ *     -tags:
  *       - showtimes
  *     summary: Update a showtime
  *     parameters:
@@ -164,7 +164,7 @@ router.put("/:id", updateShowtime, validateShowtime);
  * @swagger
  * /showtimes/{id}:
  *   delete:
- *     tags:
+ *     -tags:
  *       - showtimes
  *     summary: Delete a showtime
  *     parameters:
@@ -190,7 +190,7 @@ router.delete("/:id", deleteShowtime);
  * @swagger
  * /showtimes:
  *   get:
- *     tags:
+ *     -tags:
  *       - showtimes
  *     summary: Get all showtimes
  *     responses:
