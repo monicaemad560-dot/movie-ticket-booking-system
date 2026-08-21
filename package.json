@@ -4,8 +4,9 @@
   "description": "A platform for browsing movies, booking tickets, and managing showtimes - built with Node.js, TypeScript, Express, and MongoDB.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "dev": "tsx src/server.ts",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/monicaemad560-dot/movie-ticket-booking-system.git"
