@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import UserModel,{Showtime} from "../models/user.model.js";
+import UserModel from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
-import { AuthRequest } from "../middleware/auth.middleware.js";
+
 // POST /auth/register
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {

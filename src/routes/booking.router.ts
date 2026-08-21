@@ -68,7 +68,6 @@ const router = Router();
  *   name: Reservation
  *   description: Reservation Logic and How it works
  */
-router.get("/",getAll)
 /**
  * @swagger
  * /egybest:
@@ -85,7 +84,8 @@ router.get("/",getAll)
  *       500:
  *         description: Some server error!
  */
-router.patch("/",reservation)
+router.get("/",getAll)
+
 /**
  * @swagger
  * /egybest:
@@ -110,5 +110,6 @@ router.patch("/",reservation)
  *       500:
  *         description: Some server error!
  */
+router.patch("/",reservation)
 
 export default router ;

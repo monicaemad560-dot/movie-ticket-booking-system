@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import UserModel,{Showtime} from "../models/user.model.js";
 import { Booking } from "../models/booking.model.js";
-import { generateToken } from "../utils/generateToken.js";
-import { AuthRequest } from "../middleware/auth.middleware.js";
+import { Showtime } from "../models/showtime.model.js";
 
 export const getAll = async (req:Request,res:Response)=>{
     try{
