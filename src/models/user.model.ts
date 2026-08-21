@@ -21,14 +21,15 @@ const userSchema = new Schema<User>({
 export default mongoose.model<User>("User", userSchema);
 
 interface IShowtime extends Document {
-    movieId: Schema.Types.ObjectId; // Reference to the Movie model
+    movieId: String; // Reference to the Movie model
     movieName : string;
-    hallnumber: number;
-    date: Date;
-    startTime: Date;
-    endTime: Date;
+    hallnumber: String;
+    date: String;
+    startTime: String;
+    endTime: String;
     ticketprice: number;
     totalcapacity: number;
+    selectedSeats: [string];
 }
 
 const ShowtimeSchema: Schema = new Schema({
@@ -40,8 +41,7 @@ const ShowtimeSchema: Schema = new Schema({
     endTime: { type: String, required: true },
     ticketprice: { type: Number, required: true },
     totalcapacity: { type: Number, required: true },
-    seatsRequired : { type: Number, required : true },
-    selectedSeats : { type: [String], required : true}
+    selectedSeats : { type: [String], default : [] ,required : true}
 });
 
 export const Showtime = mongoose.model<IShowtime>("Showtime", ShowtimeSchema);

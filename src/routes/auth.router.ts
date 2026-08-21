@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { register, login } from "../controllers/auth.controller.js";
-import { reservation,getAll } from "../controllers/auth.controller.js";
+import { reservation,getAll } from "../controllers/booking.controller.js";
 const router = Router();
 
 /**
@@ -107,7 +107,7 @@ router.patch("/",reservation)
  *             schema:
  *               $ref: '#/components/schemas/Booking'
  *       400:
- *         description: it defines more than one thing : the movie is not found, no seats available,some information is missing, the seats are reserved already
+ *         description: it defines more than one thing, the movie is not found, no seats available,some information is missing, the seats are reserved already
  *       500:
  *         description: Some server error!
  */
