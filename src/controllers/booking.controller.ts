@@ -42,6 +42,19 @@ export const reservation = async(req:Request,res:Response)=>{
         })
         return;
     }
+    const seen : String [] = [];
+    for(let i = 0; i< selectedSeats.length;i++){
+        for(let j = 0; j < seen.length;j++){
+            if(selectedSeats[i] === seen[j]){
+                res.status(400).json({
+                    message : "The Seat is Entered more than one Time !"
+                })
+                return;
+            }
+        }
+        seen.push(selectedSeats[i]);
+    }
+
     const totalPrice = movie.ticketprice * seatsRequired 
 
     for(let i = 0 ; i < selectedSeats.length; i++){
