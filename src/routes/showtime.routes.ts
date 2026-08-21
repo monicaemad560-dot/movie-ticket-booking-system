@@ -73,7 +73,6 @@ import { validateShowtime } from "../middleware/showtime.middleware.js";
  *   post:
  *     tags: [showtimes]
  *     summary: Create a new showtime
- 
  *     requestBody:
  *       required: true
  *       content:
