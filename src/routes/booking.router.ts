@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { reservation,reciept,cancel } from "../controllers/booking.controller.js";
+import { reservation,reciept,cancel, history } from "../controllers/booking.controller.js";
 import { authorize, protect } from "../middleware/auth.middleware.js";
 import { cancelBooking } from "../controllers/booking.controller.js";
 const bookingRouter = Router();
@@ -154,5 +154,5 @@ bookingRouter.patch("/:id/cancel", cancel);
  */
 
 bookingRouter.delete("/:id", protect, authorize("Cinema Admin"), cancel);
-
+bookingRouter.get("/history",protect,history);
 export default bookingRouter;

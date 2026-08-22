@@ -13,7 +13,25 @@ export const reciept = async (req:Request,res:Response)=>{
         })
     }
 } 
+export const history = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.body;
 
+        if (!userId) {
+            res.status(400).json({
+                message: "userId is required" 
+            });
+        }
+
+        const bookings = await Booking.find({ userId : userId });
+
+        res.status(200).json(bookings);
+    } catch (error) {
+        res.status(500).json({
+            message: "Something Went Wrong !"
+        });
+    }
+};
 export const reservation = async(req:Request,res:Response)=>{
     try{
         const {userId,showtimeId, seatsRequired,selectedSeats} = req.body
