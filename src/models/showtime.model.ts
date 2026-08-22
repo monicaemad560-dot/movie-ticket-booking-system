@@ -1,12 +1,12 @@
 import mongoose,{Document,Schema} from "mongoose";
 
 interface IShowtime extends Document {
-    movieId: String; // Reference to the Movie model
+    movieId: string; // Reference to the Movie model
     movieName : string;
-    hallnumber: String;
-    date: String;
-    startTime: String;
-    endTime: String;
+    hallnumber: string;
+    date: string;
+    startTime: string;
+    endTime: string;
     ticketprice: number;
     totalcapacity: number;
     selectedSeats: string[];

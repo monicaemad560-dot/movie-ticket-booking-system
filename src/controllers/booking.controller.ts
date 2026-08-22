@@ -102,6 +102,7 @@ export const reservation = async(req:Request,res:Response)=>{
     const book = await Booking.create({
         userId,
         showtimeId,
+        hallNumber : movie.hallnumber,
         seatsRequired,
         selectedSeats,
         totalPrice

@@ -17,6 +17,10 @@ export const reserve = new Schema({
         type : [String],
         required : true
     },
+    hallNumber :{
+        type : String,
+        required : true
+    },
     totalPrice : {
         type : Number,
         required : true
