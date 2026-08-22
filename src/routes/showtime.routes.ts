@@ -74,6 +74,8 @@ import { authorize, protect } from "../middleware/auth.middleware.js";
  *   post:
  *     tags: [showtimes]
  *     summary: Create a new showtime
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -99,6 +101,8 @@ router.post("/creat",protect,authorize('Cinema Admin'),validateShowtime , create
  *   get:
  *     tags: [showtimes]
  *     summary: Get a showtime by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -128,6 +132,8 @@ router.get("/:id",protect, getShowtimeById);
  *   put:
  *     tags: [showtimes]
  *     summary: Update a showtime
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -164,6 +170,8 @@ router.put("/:id",protect,authorize('Cinema Admin'), updateShowtime, validateSho
  *   delete:
  *     tags: [showtimes]
  *     summary: Delete a showtime
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -181,7 +189,7 @@ router.put("/:id",protect,authorize('Cinema Admin'), updateShowtime, validateSho
  */
 
 
-router.delete("/:id", deleteShowtime);
+router.delete("/:id",protect,authorize('Cinema Admin'), deleteShowtime);
 
 /**
  * @swagger

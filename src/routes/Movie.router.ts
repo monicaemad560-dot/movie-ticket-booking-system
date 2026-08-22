@@ -14,6 +14,8 @@ const movieRouter = Router();
  * /movies:
  *   post:
  *     summary: Create a new movie
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Movies]
  *     requestBody:
  *       required: true
@@ -63,6 +65,8 @@ movieRouter.post("/",protect,authorize('Cinema Admin'), addmovieInfo);
  * /movies:
  *   get:
  *     summary: Get all movies
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Movies]
  *     parameters:
  *       - in: query
@@ -88,6 +92,8 @@ movieRouter.get("/",protect, getmoviesInfo);
  * /movies/{id}:
  *   get:
  *     summary: Get a movie by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Movies]
  *     parameters:
  *       - in: path
@@ -111,6 +117,8 @@ movieRouter.get("/:id",protect, getmovieinfoById);
  * /movies/{id}:
  *   put:
  *     summary: Update a movie
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Movies]
  *     parameters:
  *       - in: path
@@ -156,6 +164,8 @@ movieRouter.put("/:id", protect , authorize('Cinema Admin') , updatemovieInfo);
  * /movies/{id}:
  *   delete:
  *     summary: Delete a movie
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Movies]
  *     parameters:
  *       - in: path

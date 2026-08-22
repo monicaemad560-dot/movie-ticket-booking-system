@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Showtime } from "../models/showtime.model.js";
+import { Booking } from "../models/booking.model.js";
 
 export const createShowtime = async (req: Request, res: Response) => {
     try {
@@ -38,6 +39,20 @@ export const createShowtime = async (req: Request, res: Response) => {
         if (!showtime) {
             return res.status(404).json({ msg: "Showtime not found" });
         }
+        const confirmedbooking = await Booking.findOne({
+            showtimeId: req.params.id,
+             status:"confirmed"
+
+        });
+
+        if (confirmedbooking)
+        {
+          return res.status(400).json({
+            msg: "cannot delete showtime because it has confirmed booking"
+          });
+
+        }
+        await Showtime.findByIdAndDelete(req.params.id);
         res.json({ msg: "Showtime deleted successfully" });
     } catch (error) {
         res.status(500).json({ msg : "An unknown error occurred" });
